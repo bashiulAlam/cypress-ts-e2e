@@ -1,0 +1,6 @@
+{
+    "hostUrl": "https://api.v2.emissions-api.org",
+    "productsApi": "/api/v2/products.json",
+    "dataRangeApi": "/api/v2/{product}/data-range.json",
+    "statisticsApi": "/api/v2/{product}/statistics.json"
+}

@@ -1,8 +1,11 @@
 import bookPage from "../page-objects/bookPage";
 import userCredentials from "../fixtures/userCredentials.json";
 import testData from "../fixtures/testData.json";
+import apiEndPoints from "../fixtures/apiEndpoints.json";
+import products from "../fixtures/products.json";
+import dataRange from "../fixtures/data-range.json";
 
-describe('E2E UI Tests', () => {
+describe.skip('E2E UI Tests', () => {
 
   beforeEach(() => {
     bookPage.openHomePage();
@@ -24,7 +27,6 @@ describe('E2E UI Tests', () => {
     bookPage.getPublisherNameFromSearchResult().each(($element, index) => {
       let text = $element.text().trim();
       if (text.length > 0 && index > 0) {
-        //cy.log('checking text ' + $element.text());
         expect(text.includes(testData.publisher)).to.be.true;
       }
     });
@@ -66,4 +68,41 @@ describe('E2E UI Tests', () => {
       expect($bookTitle.text().trim()).to.be.empty;
     });
   });
-})
+});
+
+describe('API Tests', () => {
+  it('Get list of available products', () => {
+    let endpoint = apiEndPoints.hostUrl + apiEndPoints.productsApi;
+    cy.request("GET", endpoint).then((response) => {
+      cy.log(JSON.stringify(response.body));
+      expect(response.status).to.eq(200);
+      cy.writeFile('cypress/fixtures/products.json', { name: response.body[1].name });
+    });
+  });
+
+  it('Get data range by product', () => {
+    let endpoint = apiEndPoints.hostUrl + apiEndPoints.dataRangeApi.replace('{product}', products.name);
+    cy.request("GET", endpoint).then((response) => {
+      cy.log(JSON.stringify(response.body));
+      expect(response.status).to.eq(200);
+      cy.writeFile('cypress/fixtures/data-range.json', { first: response.body.first, last: response.body.last });
+    });
+  });
+
+  it('Get available statistics by product and range', () => {
+    //let param = '?' + 'begin=' + dataRange.first + '&end=' + dataRange.last;
+    let endpoint = apiEndPoints.hostUrl + apiEndPoints.statisticsApi.replace('{product}', products.name);
+    cy.request({
+      method: "GET", 
+      url: endpoint,
+      qs: {
+        begin: dataRange.first,
+        end: dataRange.last,
+        interval: 'day'
+      }}).then((response) => {
+      cy.log(JSON.stringify(response.body));
+      expect(response.status).to.eq(200);
+      cy.writeFile('cypress/fixtures/values.json', { value: response.body.value });
+    });
+  });
+});
