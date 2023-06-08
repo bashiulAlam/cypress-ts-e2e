@@ -1,0 +1,17 @@
+# Cypress generated files
+/cypress/videos/
+/cypress/screenshots/
+
+# Cypress environment variables
+/cypress.env.json
+
+# Cypress binary cache
+/.cache/
+
+# Node modules
+/node_modules/
+
+# Miscellaneous files
+.DS_Store
+*.log
+npm-debug.log*
