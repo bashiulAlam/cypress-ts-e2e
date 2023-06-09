@@ -48,16 +48,6 @@ class bookPage {
         });
     }
 
-    validateBookFromProfileCollection(title : string, authorName : string) {
-        cy.get(':nth-child(6) > .element-list > .menu-list > #item-3').click();
-        cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(2)').then(($bookTitle) => {
-            expect($bookTitle.text()).to.contain(title);
-        });
-        cy.get('.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(3)').then(($author) => {
-            expect($author.text()).to.contain(authorName);
-        });
-    }
-
     navigateToProfileCollection() {
         cy.get(':nth-child(6) > .element-list > .menu-list > #item-3').click();
     }
