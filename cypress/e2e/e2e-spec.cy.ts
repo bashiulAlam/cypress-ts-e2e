@@ -6,7 +6,7 @@ import products from "../fixtures/products.json";
 import dataRange from "../fixtures/data-range.json";
 import values from "../fixtures/values.json";
 
-describe.skip('E2E UI Tests', () => {
+describe('E2E UI Tests', () => {
 
   beforeEach(() => {
     bookPage.openHomePage();
