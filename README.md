@@ -1,4 +1,7 @@
 # E2E UI Tests and API Tests with Cypress and Typescript
+
+1. Implement UI tests for the site: https://demoqa.com/books
+2. Implement API tests for the APIs mentioned in: https://api.v2.emissions-api.org/ui/
 ***
 
 ## Project Tools Used
@@ -70,6 +73,6 @@ Statistics API | 1. Check HTTP response code is 200. <br> 2. Check that the para
 
 ## Future Improvements
 
-1. Add more test cases.
+1. Add more test cases with negative inputs and for different HTTP response codes.
 2. Test cases have not been written in *BDD* format, we can add any *Gherkin* framework to achieve that.
 3. Add project with a CI/CD pipeline.
