@@ -37,7 +37,7 @@ API | Validation Points |
 --- | --- |
 Products API | 1. Check HTTP response code is 200. |
 Data range API | 1. Check HTTP response code is 200. |
-Statistics API 1. Check HTTP response code is 200. <br> 2. Check that the params of object *value* are all number type. |
+Statistics API | 1. Check HTTP response code is 200. <br> 2. Check that the params of object *value* are all number type. |
 
 ## Project Import
 
