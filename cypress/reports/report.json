@@ -1,0 +1,202 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-06-09T08:48:49.597Z",
+    "end": "2023-06-09T08:49:02.321Z",
+    "duration": 12724,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "38c5ea7b-ee38-47fe-9159-8884cf624f01",
+      "title": "",
+      "fullFile": "cypress/e2e/e2e-spec.cy.ts",
+      "file": "cypress/e2e/e2e-spec.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7f30683b-6d9c-47b5-a905-27ad1e2aaca3",
+          "title": "E2E UI Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Add book to collection",
+              "fullTitle": "E2E UI Tests Add book to collection",
+              "timedOut": null,
+              "duration": 6889,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//validate that correct username is displayed after login\nbookPage_1.default.getDisplayedUsername().then(function (displayedName) {\n    var displayName = displayedName.text();\n    cy.log('username displayed : ' + displayName);\n    expect(displayName.includes(userCredentials_json_1.default.username)).to.be.true;\n});\n//search with publisher and validate the search result by publisher name\nbookPage_1.default.searchWithPublisher(testData_json_1.default.publisher);\nbookPage_1.default.getPublisherNameFromSearchResult().each(function ($element, index) {\n    var text = $element.text().trim();\n    if (text.length > 0 && index > 0) {\n        expect(text.includes(testData_json_1.default.publisher)).to.be.true;\n    }\n});\nvar authorName, title;\n//save the author name for validation purposes later\nbookPage_1.default.getAuthorNameFromSearchResult().each(function ($element, index) {\n    if (index == testData_json_1.default.bookSerial) {\n        authorName = $element.text().trim();\n        cy.log('author name : ' + authorName);\n    }\n});\n//save the book title for validation purposes later\nbookPage_1.default.getTitleFromSearchResult().each(function ($element, index) {\n    if (index == testData_json_1.default.bookSerial) {\n        title = $element.text().trim();\n        cy.log('book title : ' + title);\n    }\n});\nbookPage_1.default.openTitleBySerial(testData_json_1.default.bookSerial);\nbookPage_1.default.getTitleFromDetailPage().then(function ($bookTitle) {\n    expect($bookTitle.text().includes(title)).to.be.true;\n});\n//add book to collection and then navigate to profile and validate correct book has been added by checking book title and author name\nbookPage_1.default.addBookToCollection();\nbookPage_1.default.navigateToProfileCollection();\nbookPage_1.default.getAuthorFromProfile().then(function ($author) {\n    expect($author.text().includes(authorName)).to.be.true;\n});\nbookPage_1.default.getBookTitleFromProfile().then(function ($bookTitle) {\n    expect($bookTitle.text().includes(title)).to.be.true;\n});",
+              "err": {},
+              "uuid": "511fb76b-36e5-4e7c-a728-2ea823568bb0",
+              "parentUUID": "7f30683b-6d9c-47b5-a905-27ad1e2aaca3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Delete book from collection",
+              "fullTitle": "E2E UI Tests Delete book from collection",
+              "timedOut": null,
+              "duration": 5038,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//delete the book from collection\nbookPage_1.default.navigateToProfileCollection();\nbookPage_1.default.deleteBookFromCollection();\ncy.wait(3000);\n//check that collection is empty\nbookPage_1.default.getBookTitleFromProfile().then(function ($bookTitle) {\n    expect($bookTitle.text().trim()).to.be.empty;\n});",
+              "err": {},
+              "uuid": "3606a39a-04c8-401a-bed6-75aa11ca6577",
+              "parentUUID": "7f30683b-6d9c-47b5-a905-27ad1e2aaca3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "511fb76b-36e5-4e7c-a728-2ea823568bb0",
+            "3606a39a-04c8-401a-bed6-75aa11ca6577"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 11927,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "10bae4f4-89ff-4dff-b23c-c9f54272509a",
+          "title": "API Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Get list of available products",
+              "fullTitle": "API Tests Get list of available products",
+              "timedOut": null,
+              "duration": 308,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var endpoint = apiEndpoints_json_1.default.hostUrl + apiEndpoints_json_1.default.productsApi;\ncy.request(\"GET\", endpoint).then(function (response) {\n    cy.log(JSON.stringify(response.body));\n    expect(response.status).to.eq(200);\n    //write the product name in file to use it in the following tests\n    cy.writeFile('cypress/fixtures/products.json', { name: response.body[0].name });\n});",
+              "err": {},
+              "uuid": "becb2dfa-c818-404d-8574-41d5e263c440",
+              "parentUUID": "10bae4f4-89ff-4dff-b23c-c9f54272509a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get data range by product",
+              "fullTitle": "API Tests Get data range by product",
+              "timedOut": null,
+              "duration": 58,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var endpoint = apiEndpoints_json_1.default.hostUrl + apiEndpoints_json_1.default.dataRangeApi.replace('{product}', products_json_1.default.name);\ncy.request(\"GET\", endpoint).then(function (response) {\n    cy.log(JSON.stringify(response.body));\n    expect(response.status).to.eq(200);\n    //write the range data in file to use it in the following test\n    cy.writeFile('cypress/fixtures/data-range.json', { first: response.body.first, last: response.body.last });\n});",
+              "err": {},
+              "uuid": "c416ead4-b685-4a23-b5e8-9b88a15e8a67",
+              "parentUUID": "10bae4f4-89ff-4dff-b23c-c9f54272509a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get available statistics by product and range",
+              "fullTitle": "API Tests Get available statistics by product and range",
+              "timedOut": null,
+              "duration": 335,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var endpoint = apiEndpoints_json_1.default.hostUrl + apiEndpoints_json_1.default.statisticsApi.replace('{product}', products_json_1.default.name);\ncy.request({\n    method: \"GET\",\n    url: endpoint,\n    qs: {\n        begin: data_range_json_1.default.first,\n        end: data_range_json_1.default.last,\n        interval: 'day'\n    }\n}).then(function (response) {\n    cy.log(JSON.stringify(response.body));\n    expect(response.status).to.eq(200);\n    //write the params of one value object in file and validate that they are all numbers\n    cy.writeFile('cypress/fixtures/values.json', { value: response.body[0].value });\n    expect(typeof values_json_1.default.value.average).to.eq('number');\n    expect(typeof values_json_1.default.value.count).to.eq('number');\n    expect(typeof values_json_1.default.value.max).to.eq('number');\n    expect(typeof values_json_1.default.value.min).to.eq('number');\n    expect(typeof values_json_1.default.value[\"standard deviation\"]).to.eq('number');\n});",
+              "err": {},
+              "uuid": "e560d27a-10e1-4715-a3f5-dea793e64c39",
+              "parentUUID": "10bae4f4-89ff-4dff-b23c-c9f54272509a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "becb2dfa-c818-404d-8574-41d5e263c440",
+            "c416ead4-b685-4a23-b5e8-9b88a15e8a67",
+            "e560d27a-10e1-4715-a3f5-dea793e64c39"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 701,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "html": true,
+        "json": true,
+        "reportDir": "cypress/reports",
+        "reportFilename": "report",
+        "overwrite": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
